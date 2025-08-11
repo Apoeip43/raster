@@ -51,9 +51,7 @@ void calc_mandelbrot(float init_x, float init_y) {
 void main() {
     // Normalize pixel coordinates (0..1)
     vec2 uv = gl_FragCoord.xy / iResolution;
-    // Centered coordinates (-1..1)
-    // vec2 p = (uv - 0.5) * 2.0;
-    // normalize it again to be x (-2..1) y (-1.12 .. 1.12)
+    // Select canvas limits (to be made interactive)
     float xmax = -0.713409425;
     float xmin = -0.748373388;
     float ymax = 0.222862401;
@@ -63,12 +61,5 @@ void main() {
     float y = mix(ymin, ymax, uv.y);
     vec2 p = vec2(x, y);
     
-    // Simple animated color bands
-    // float r = 0.5 + 0.5 * cos(6.28318 * (p.x * 0.5) + iTime * 0.7);
-    // float g = 0.5 + 0.5 * cos(6.28318 * (p.y * 0.5) - iTime * 1.1);
-    // float b = 0.5 + 0.5 * cos(6.28318 * ((p.x + p.y) * 0.25) + iTime * 0.3);
-
     calc_mandelbrot(p.x, p.y);
-
-    // fragColor = vec4(r, g, b, 1.0);
 }

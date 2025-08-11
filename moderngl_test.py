@@ -45,6 +45,7 @@ end_frame = time.perf_counter()
 TARGET_FPS = 60
 TARGET_FPS_TIME = 1.0/TARGET_FPS
 framecount = 0
+# Saves position in terminal so the FPS counter does not keep writing endlessly, and overwrites itself.
 print("\033[s")
 
 
@@ -59,7 +60,6 @@ while not glfw.window_should_close(window):
     ctx.viewport = (0, 0, width, height)
     ctx.clear(0.02, 0.02, 0.03)
 
-    # prog["iTime"].value = float(time.perf_counter() - start)
     prog["iResolution"].value = (float(width), float(height))
     prog["MAXITER"].value = int(300)
 
@@ -74,11 +74,9 @@ while not glfw.window_should_close(window):
 
     framecount += 1
     if time.perf_counter() - fps_timer >= 1:
-        print(f"\033[u\033[2KFPS: {framecount}, et: {elapsed} tg: {TARGET_FPS_TIME}\n\tsf: {start_frame}, ef: {end_frame}")
+        print(f"\033[u\033[2K\033[0JFPS: {framecount}, et: {elapsed} tg: {TARGET_FPS_TIME}\n\tsf: {start_frame}, ef: {end_frame}")
         framecount = 0
         fps_timer = time.perf_counter()
-        
-
 
 
 glfw.terminate()
